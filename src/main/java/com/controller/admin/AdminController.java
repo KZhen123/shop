@@ -207,6 +207,14 @@ public class AdminController {
     }
 
     /**
+     * 管理员类别列表
+     * */
+    @GetMapping("/admin/category")
+    public String admincategory(){
+        return "/admin/product/category";
+    }
+
+    /**
      * 分页管理员查看各类商品信息
      *前端传入页码、分页数量
      *前端传入商品信息状态码（commstatus）-->全部:100，违规:0，已审核:1，待审核:3 已完成:4
