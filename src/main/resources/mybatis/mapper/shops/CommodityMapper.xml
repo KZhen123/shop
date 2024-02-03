@@ -4,12 +4,12 @@
 
     <!-- 插入商品 -->
     <insert id="InsertCommodity" parameterType="com.entity.Commodity">
-        insert into commodity (commid,commname,commdesc,videourl,orimoney,thinkmoney,school,common,category,image,userid) value
-        (#{commid},#{commname},#{commdesc},#{videourl},#{orimoney},#{thinkmoney},#{school},#{common},#{category},#{image},#{userid})
+        insert into commodity (commid,commname,commdesc,orimoney,thinkmoney,school,category,image,userid) value
+        (#{commid},#{commname},#{commdesc},#{orimoney},#{thinkmoney},#{school},#{category},#{image},#{userid})
     </insert>
     <!-- 查询商品详情 -->
     <select id="LookCommodity" resultType="com.entity.Commodity" parameterType="com.entity.Commodity">
-        select commid,commname,commdesc,videourl,orimoney,thinkmoney,school,createtime,commstatus,common,rednumber,category,image,userid from commodity
+        select commid,commname,commdesc,orimoney,thinkmoney,school,createtime,commstatus,rednumber,category,image,userid from commodity
         where commid=#{commid}
     </select>
     <!-- 修改商品 -->
@@ -22,9 +22,6 @@
             <if test="commdesc!=null">
                 commdesc=#{commdesc},
             </if>
-            <if test="videourl!=null">
-                videourl=#{videourl},
-            </if>
             <if test="orimoney!=null">
                 orimoney=#{orimoney},
             </if>
@@ -33,9 +30,6 @@
             </if>
             <if test="rednumber!=null">
                 rednumber=rednumber+1,
-            </if>
-            <if test="common!=null">
-                common=#{common},
             </if>
             <if test="category!=null">
                 category=#{category},
@@ -104,8 +98,6 @@
         <where>
             <if test="category != '全部'">and category = #{category}</if>
             <if test="(minmoney != null) and (maxmoney != null)">and thinkmoney between #{minmoney} and #{maxmoney}</if>
-            <if test="area == '附近'">and school != #{school}</if>
-            <if test="area == '本校'">and school = #{school}</if>
             and commstatus=1
         </where>
         order by updatetime desc limit #{page},#{count}
@@ -117,9 +109,21 @@
             <if test="category != '全部'">and category = #{category}</if>
             <if test="minmoney != null">and thinkmoney &gt;= #{minmoney}</if>
             <if test="maxmoney != null">and thinkmoney &lt;= #{maxmoney}</if>
-            <if test="area == '附近'">and school != #{school}</if>
-            <if test="area == '本校'">and school = #{school}</if>
             and commstatus=1
         </where>
+    </select>
+    <select id="queryAllCommodityByCategorySorted" resultType="com.entity.Commodity">
+        select commid,commname,orimoney,thinkmoney,school,updatetime,image
+        from commodity
+        <where>
+            <if test="category != '全部'">and category = #{category}</if>
+            <if test="(minmoney != null) and (maxmoney != null)">and thinkmoney between #{minmoney} and #{maxmoney}</if>
+            and commstatus=1
+        </where>
+        <if test="sortId==1">order by thinkmoney asc</if>
+        <if test="sortId==2">order by thinkmoney desc</if>
+        <if test="sortId==3">order by rednumber asc</if>
+        <if test="sortId==4">order by rednumber desc</if>
+        limit #{page},#{count}
     </select>
 </mapper>

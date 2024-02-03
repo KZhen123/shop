@@ -22,22 +22,6 @@ public class IndexController {
     }
 
     /**
-     * 联系我们
-     * */
-    @GetMapping("/contacts")
-    public String contacts(){
-        return "/common/contacts";
-    }
-
-    /**
-     * 关于我们
-     * */
-    @GetMapping("/about")
-    public String about(){
-        return "/common/about";
-    }
-
-    /**
      * 后台管理首页
      * */
     @GetMapping("/admin/index")
@@ -127,6 +111,7 @@ public class IndexController {
         return "/common/product-listing";
     }
 
+
     /**
      * 跳转到产品清单搜索界面
      * */
@@ -183,19 +168,4 @@ public class IndexController {
         return "/admin/sold/soldrecord";
     }
 
-    /**
-     * 首页公告清单
-     * */
-    @GetMapping("/user/newslist")
-    public String userNews(){
-        return "/common/listnews";
-    }
-
-    /**
-     * 管理员公告列表
-     * */
-    @GetMapping("/admin/newslist")
-    public String adminNews(){
-        return "/admin/news/newslist";
-    }
 }

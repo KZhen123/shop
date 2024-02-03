@@ -1,7 +1,6 @@
-let prices = 0;//价格排序
+let sortId = 0;//排序编号
 let category = "全部";//商品类别
 let actcategoryid="ac1";
-let area = "全部";//商品区域
 let minmoney = 0;//商品最低价
 let maxmoney = 5000;//商品最高价
 layui.use(['form', 'slider'], function () {
@@ -19,30 +18,13 @@ layui.use(['form', 'slider'], function () {
         , change: function (value) {
             minmoney=value[0];
             maxmoney=value[1];
-            gouzaopage();
+            getPage();
         }
     });
-    form.on('select(setprices)', function (data) {
+    form.on('select(sort)', function (data) {
         var indexGID = data.elem.selectedIndex;
-        prices = data.elem[indexGID].title;
-        gouzaopage();
-    });
-    form.on('select(setareas)', function (data) {
-        var indexGID = data.elem.selectedIndex;
-        area = data.elem[indexGID].title;
-        if(area!="全部"){
-            if(userid==null){
-                layer.msg("登录后才能查看"+area+"的数据", {
-                    time: 1000,
-                    icon: 2,
-                    offset: '300px'
-                });
-            }else{
-                gouzaopage();
-            }
-        }else {
-            gouzaopage();
-        }
+        sortId = data.elem[indexGID].title;
+        getPage();
     });
 });
 function setcategory(categroys,actid){
@@ -50,7 +32,7 @@ function setcategory(categroys,actid){
     $("#"+actcategoryid).removeClass("current");
     actcategoryid=actid;
     $("#"+actcategoryid).addClass("current");
-    gouzaopage();
+    getPage();
 }
 var productList = new Vue({
     el: '#productlist',
@@ -60,15 +42,15 @@ var productList = new Vue({
         }
     },
     mounted: function () {
-        this.gouzaopage();
-        window.gouzaopage = this.gouzaopage;
+        this.getPage();
+        window.getPage = this.getPage;
         window.lookproductlistData = this.lookproductlistData;
     },
     methods: {
         //创建layui的分页
-        gouzaopage:function () {
+        getPage:function () {
             $.ajax({
-                url: basePath + "/list-number/"+category+"/"+area+"/"+minmoney+"/"+maxmoney,
+                url: basePath + "/list-number/"+category+"/"+minmoney+"/"+maxmoney,
                 data: "",
                 contentType: "application/json;charset=UTF-8", //发送数据的格式
                 type: "get",
@@ -101,7 +83,7 @@ var productList = new Vue({
         , lookproductlistData:function (page) {
             var that=this;
             $.ajax({
-                url: basePath + "/product-listing/"+category+"/"+page+"/"+area+"/"+minmoney+"/"+maxmoney+"/"+prices,
+                url: basePath + "/product-listing/"+category+"/"+page+"/"+minmoney+"/"+maxmoney+"/"+sortId,
                 data: "",
                 contentType: "application/json;charset=UTF-8", //发送数据的格式
                 type: "get",

@@ -81,8 +81,6 @@
                                     <img th:src="${imgs}" alt="">
                                 </div>
                             </div>
-                            <a class="popup-youtube ps-product__video" th:href="${gddetail.videourl}">
-                                <img th:src="${gddetail.image}" alt=""><i class="fa fa-play"></i></a>
                         </div>
                         <div class="ps-product__image layer-photos-demo" id="layer-photos-demo">
                             <img th:src="${gddetail.image}" th:layer-src="${gddetail.image}" style="width:500px;height:500px;cursor: pointer;">
@@ -91,8 +89,6 @@
                         </div>
                     </div>
                     <div class="ps-product__info">
-                        <h1 style='width:400px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;' id="commname"
-                            th:title="${gddetail.commname}" th:text="${gddetail.commname}"></h1>
                         <div style="margin-top:10px;margin-bottom:10px">
                             <span style="font-size:25px;color:#E7503C">￥</span>
                             <span style="font-size:30px;color:#E7503C" th:text="${gddetail.thinkmoney}"></span>
@@ -106,10 +102,6 @@
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
                             style="background-color:#27B574">地&nbsp;址</button>&nbsp;&nbsp;<span th:text="${gddetail.school}" id="school"></span>
-                        </h4>
-                        <h4 style="margin-bottom:15px">
-                            <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
-                                    style="background-color:#27B574">标&nbsp;签</button>&nbsp;&nbsp;<span th:text="${gddetail.common}"></span>
                         </h4>
                         <h4 style="margin-bottom:15px">
                             <button type="button" class="layui-btn layui-btn-sm layui-btn-radius"
@@ -223,7 +215,7 @@
                             <div class="layui-form-item layui-form-text">
                                 <div class="layui-input-block">
                                     <textarea class="layui-textarea" name="content" id="content"
-                                    style="resize: none;height:66px" lay-verify="required" lay-reqtext="评论内容岂能为空？"
+                                    style="resize: none;height:66px" lay-verify="required" lay-reqtext="评论内容不能为空"
                                               placeholder="请输入评论内容"></textarea>
                                 </div>
                             </div>
@@ -243,68 +235,13 @@
             </div>
         </div>
     </div>
-    <div class="ps-section ps-section--top-sales ps-owl-root pt-40 pb-80" id="latestp">
-        <div class="ps-container">
-            <div class="ps-section__header mb-50">
-                <div class="row">
-                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 ">
-                        <h3 class="ps-section__title" data-mask="Related item">- 最新商品</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="ps-section__content">
-                <div class="masonry-wrapper" data-col-md="4" data-col-sm="2" data-col-xs="1" data-gap="30"
-                     data-radio="100%">
-                    <div class="layui-container">
-                        <div class="layui-row layui-col-space5">
-                            <div class="layui-col-md3" v-for="commodity in latestData" :key="commodity.commid">
-                                <div class="ps-shoes--carousel">
-                                    <div class="ps-shoe">
-                                        <div class="ps-shoe__thumbnail">
-                                            <div class="ps-badge"><span>New</span></div>
-                                            <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
-                                            <img v-bind:src="commodity.image" alt="商品主图" style="height:300px">
-                                            <a class="ps-shoe__overlay" :href="'/product-detail/'+commodity.commid"
-                                               target="_blank"></a>
-                                        </div>
-                                        <div class="ps-shoe__content">
-                                            <div class="ps-shoe__variants">
-                                                <div class="layui-col-md4" v-for="imgs in commodity.otherimg"
-                                                     :key="imgs.id">
-                                                    <img v-bind:src="imgs" style="height:80px">
-                                                </div>
-                                            </div>
-                                            <div class="ps-shoe__detail">
-                                                <p style="width:130px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;">
-                                                    <a class="ps-shoe__name" :href="'/product-detail/'+commodity.commid">
-                                                        {{ commodity.commname }}
-                                                    </a>
-                                                </p>
-                                                <p class="ps-shoe__categories">
-                                                    {{ commodity.school }}
-                                                </p>
-                                                <span class="ps-shoe__price">
-                                            <del> ￥ {{ commodity.orimoney }}</del> ￥ {{ commodity.thinkmoney }}
-                                        </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="ps-footer bg--cover" data-background="images/background/parallax.jpg">
         <div class="ps-footer__content">
             <div class="ps-container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                         <aside class="ps-widget--footer ps-widget--info">
-                            <header><a class="ps-logo" th:href="@{/}"><img th:src="@{/static/images/logo-white.png}" alt=""></a>
-                                <h3 class="ps-widget__title">Address Office 1</h3>
+                            <header><h3 class="ps-widget__title">Address Office 1</h3>
                             </header>
                             <footer>
                                 <p><strong>460 West 34th Street, 15th floor, New York</strong></p>
@@ -391,7 +328,7 @@
 <script type="text/javascript" th:src="@{/static/plugins/elevatezoom/jquery.elevatezoom.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/jquery-ui/jquery-ui.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/ditugoogle.js}"></script>
+<!--<script type="text/javascript" th:src="@{/static/js/ditugoogle.js}"></script>-->
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.tools.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.revolution.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/extensions/revolution.extension.video.min.js}"></script>

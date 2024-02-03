@@ -76,8 +76,6 @@ public class CommodityController {
         if(commodity.getCommstatus().equals(2) || commodity.getCommstatus().equals(4)){
             return "/error/404";//商品已被删除或已完成交易
         }
-        String[] commons=commodity.getCommon().split("、");
-        commodity.setCommon(commons[0]).setCommon2(commons[1]);
         modelMap.put("goods",commodity);
         modelMap.put("otherimg",commimagesService.LookGoodImages(commid));
         return "/user/product/changegoods";
@@ -94,7 +92,6 @@ public class CommodityController {
     public String changegoods(@RequestBody Commodity commodity, HttpSession session){
         String userid = (String) session.getAttribute("userid");
         commodity.setUpdatetime(new Date()).setCommstatus(3);
-        commodity.setCommon(commodity.getCommon()+"、"+commodity.getCommon2());//常用选项拼接
         commodityService.ChangeCommodity(commodity);
         commimagesService.DelGoodImages(commodity.getCommid());
         List<Commimages> commimagesList=new ArrayList<>();
@@ -121,7 +118,6 @@ public class CommodityController {
         UserInfo userInfo = userInfoService.LookUserinfo(userid);
         String commid = KeyUtil.genUniqueKey();
         commodity.setCommid(commid).setUserid(userid).setSchool(userInfo.getSchool());//商品id
-        commodity.setCommon(commodity.getCommon()+"、"+commodity.getCommon2());//常用选项拼接
         commodityService.InsertCommodity(commodity);
         List<Commimages> commimagesList=new ArrayList<>();
         for (String list:commodity.getOtherimg()) {
@@ -303,80 +299,31 @@ public class CommodityController {
      * 最低价（minmoney）、最高价（maxmoney）
      * 后端根据session查出个人本校信息（school）
      * */
-    @GetMapping("/list-number/{category}/{area}/{minmoney}/{maxmoney}")
+    @GetMapping("/list-number/{category}/{minmoney}/{maxmoney}")
     @ResponseBody
-    public PageVo productListNumber(@PathVariable("category") String category, @PathVariable("area") String area,
+    public PageVo productListNumber(@PathVariable("category") String category,
                                     @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
                                     HttpSession session) {
-        String school=null;
-        if(!area.equals("全部")){
-            String userid = (String) session.getAttribute("userid");
-            UserInfo userInfo = userInfoService.LookUserinfo(userid);
-            school = userInfo.getSchool();
-        }
-        Integer dataNumber = commodityService.queryAllCommodityByCategoryCount(area, school, category, minmoney, maxmoney);
+        Integer dataNumber = commodityService.queryAllCommodityByCategoryCount(category, minmoney, maxmoney);
         return new PageVo(StatusCode.OK,"查询成功",dataNumber);
     }
 
     /**
      * 产品清单界面
      * 前端传入商品类别（category）、当前页码（nowPaging）、区域（area）
-     * 最低价（minmoney）、最高价（maxmoney）、价格升序降序（price：0.不排序 1.升序 2.降序）
+     * 最低价（minmoney）、最高价（maxmoney）、价格升序降序（price：0.不排序 1.升序 2.降序）、点击率升序降序（3：升序 4：降序）
      * 后端根据session查出个人本校信息（school）
      * */
-    @GetMapping("/product-listing/{category}/{nowPaging}/{area}/{minmoney}/{maxmoney}/{price}")
+    @GetMapping("/product-listing/{category}/{nowPaging}/{minmoney}/{maxmoney}/{sortId}")
     @ResponseBody
     public ResultVo productlisting(@PathVariable("category") String category, @PathVariable("nowPaging") Integer page,
-                                 @PathVariable("area") String area, @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
-                                 @PathVariable("price") Integer price, HttpSession session) {
-        String school=null;
-        if(!area.equals("全部")) {
-            String userid = (String) session.getAttribute("userid");
-            UserInfo userInfo = userInfoService.LookUserinfo(userid);
-            school = userInfo.getSchool();
-        }
-        List<Commodity> commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, area, school, category, minmoney, maxmoney);
+                                  @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
+                                 @PathVariable("sortId") Integer sortId, HttpSession session) {
+        List<Commodity> commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, category, minmoney, maxmoney,sortId);
         for (Commodity commodity : commodityList) {
             /**查询商品对应的其它图片*/
             List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
             commodity.setOtherimg(imagesList);
-        }
-
-        /**自定义排序*/
-        if (price != 0){
-            if (price == 1){
-                /**升序*/
-                Collections.sort(commodityList, new Comparator<Commodity>() {//此处创建了一个匿名内部类
-                    int i;
-                    @Override
-                    public int compare(Commodity o1, Commodity o2) {
-                        if (o1.getThinkmoney().compareTo(o2.getThinkmoney()) > -1) {
-                            System.out.println("===o1大于等于o2===");
-                            i = 1;
-                        } else if (o1.getThinkmoney().compareTo(o2.getThinkmoney()) < 1) {
-                            i = -1;
-                            System.out.println("===o1小于等于o2===");
-                        }
-                        return i;
-                    }
-                });
-            }else if (price == 2){
-                /**降序*/
-                Collections.sort(commodityList, new Comparator<Commodity>() {//此处创建了一个匿名内部类
-                    int i;
-                    @Override
-                    public int compare(Commodity o1, Commodity o2) {
-                        if (o1.getThinkmoney().compareTo(o2.getThinkmoney()) > -1) {
-                            System.out.println("===o1大于等于o2===");
-                            i = -1;
-                        } else if (o1.getThinkmoney().compareTo(o2.getThinkmoney()) < 1) {
-                            System.out.println("===o1小于等于o2===");
-                            i = 1;
-                        }
-                        return i;
-                    }
-                });
-            }
         }
         return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
     }

@@ -63,11 +63,15 @@ public class CommodityService {
         return commodityMapper.queryCommodityByCategory(category);
     }
     /**产品清单分类分页展示商品*/
-    public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,String area,String school,String category,BigDecimal minmoney,BigDecimal maxmoney){
-        return commodityMapper.queryAllCommodityByCategory(page,count,area,school,category,minmoney,maxmoney);
+    public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,String category,BigDecimal minmoney,BigDecimal maxmoney){
+        return commodityMapper.queryAllCommodityByCategory(page,count,category,minmoney,maxmoney);
+    }
+    /**产品清单分类分页展示商品-排序*/
+    public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,String category,BigDecimal minmoney,BigDecimal maxmoney,Integer sortId){
+        return commodityMapper.queryAllCommodityByCategorySorted(page,count,category,minmoney,maxmoney,sortId);
     }
     /**查询产品清单分类分页展示商品的总数*/
-    public Integer queryAllCommodityByCategoryCount(String area, String school, String category, BigDecimal minmoney, BigDecimal maxmoney){
-        return commodityMapper.queryAllCommodityByCategoryCount(area,school,category,minmoney,maxmoney);
+    public Integer queryAllCommodityByCategoryCount(String category, BigDecimal minmoney, BigDecimal maxmoney){
+        return commodityMapper.queryAllCommodityByCategoryCount(category,minmoney,maxmoney);
     }
 }

@@ -67,20 +67,14 @@
             <div class="ps-product-action">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
-                        <label class="layui-form-label" style="font-size:25px;color:#626262"><b>价格</b></label>
+                        <label class="layui-form-label" style="width: 120px;font-size:15px;color:#626262"><b>排序方式</b></label>
                         <div class="layui-input-inline">
-                            <select name="cname" lay-filter="setprices">
+                            <select name="cname" lay-filter="sort">
                                 <option th:title="0">默认</option>
                                 <option th:title="1">价格 (从低到高)</option>
                                 <option th:title="2">价格 (从高到低)</option>
-                            </select>
-                        </div>
-                        <label class="layui-form-label" style="font-size:25px;color:#626262"><b>区域</b></label>
-                        <div class="layui-input-inline">
-                            <select name="cname" lay-filter="setareas">
-                                <option th:title="全部">全部</option>
-                                <option th:title="本校">本校</option>
-                                <option th:title="附近">附近</option>
+                                <option th:title="3">点击率 (从低到高)</option>
+                                <option th:title="4">点击率 (从高到低)</option>
                             </select>
                         </div>
                     </div>
@@ -160,14 +154,13 @@
             </aside>
         </div>
     </div>
-    <div class="ps-footer bg--cover" style="margin-top: 2000px" data-background="images/background/parallax.jpg">
+    <div class="ps-footer bg--cover" data-background="images/background/parallax.jpg">
         <div class="ps-footer__content">
             <div class="ps-container">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">
                         <aside class="ps-widget--footer ps-widget--info">
-                            <header><a class="ps-logo" th:href="@{/}"><img th:src="@{/static/images/logo-white.png}"
-                                                                                 alt=""></a>
+                            <header>
                                 <h3 class="ps-widget__title">Address Office 1</h3>
                             </header>
                             <footer>
@@ -255,7 +248,7 @@
 <script type="text/javascript" th:src="@{/static/plugins/elevatezoom/jquery.elevatezoom.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/jquery-ui/jquery-ui.min.js}"></script>
-<script type="text/javascript" th:src="@{/static/js/ditugoogle.js}"></script>
+<!--<script type="text/javascript" th:src="@{/static/js/ditugoogle.js}"></script>-->
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.tools.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.revolution.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/layui/layui.js}"></script>

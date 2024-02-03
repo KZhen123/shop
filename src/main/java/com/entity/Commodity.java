@@ -39,10 +39,6 @@ public class Commodity implements Serializable {
      */
     private String commdesc;
     /**
-     * 视频
-     */
-    private String videourl;
-    /**
      * 原价
      */
     private BigDecimal orimoney;
@@ -70,14 +66,6 @@ public class Commodity implements Serializable {
      * 0违规 1正常 2删除  3待审核
      */
     private Integer commstatus;
-    /**
-     * 常用选项：自提，可小刀，不议价等选项
-     */
-    private String common;
-    /**
-     * 常用类别字段
-     * */
-    private String common2;
     /**
      * 商品其他图集合
      * */

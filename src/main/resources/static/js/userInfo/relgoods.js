@@ -64,6 +64,7 @@ var app = new Vue({
 
 let player = null;
 layui.use(['form', 'upload', 'element'], function () {
+    var $ = layui.jquery;
     var upload = layui.upload;
     var form=layui.form;
     upload.render({
@@ -283,5 +284,21 @@ layui.use(['form', 'upload', 'element'], function () {
             }
         });
         return false;
+    });
+
+    // 渲染下拉框
+    $.ajax({
+        type: 'get',
+        url: basePath+'/category/all',
+        dataType: 'json',
+        success: function(data) {
+              $("#category").empty();
+              $.each(data, function(i, cate) {
+                    $("#category").append("<option selected value='"+cate.id+"'>"+cate.name+"</option>");
+                    console.log(cate.name);
+              })
+              //更新渲染下拉框
+              form.render();
+        }
     });
 });

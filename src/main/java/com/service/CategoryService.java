@@ -14,4 +14,7 @@ public interface CategoryService {
     List<Category> queryPageList(Integer page, Integer size);
 
     Integer getCount();
+
+    List<Category> selectAll();
+
 }

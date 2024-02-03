@@ -1,7 +1,6 @@
 package com.controller;
 
 import com.entity.Category;
-import com.entity.News;
 import com.service.CategoryService;
 import com.util.StatusCode;
 import com.vo.LayuiPageVo;
@@ -66,5 +65,12 @@ public class CategoryController {
             result = new ResultVo(false, StatusCode.SERVERERROR, "删除失败");
         }
         return result;
+    }
+
+    @RequestMapping(value = "all", produces = "application/json")
+    @ResponseBody
+    public List<Category> getAll() {
+        List<Category> categoryVos = categoryService.selectAll();
+        return categoryVos;
     }
 }

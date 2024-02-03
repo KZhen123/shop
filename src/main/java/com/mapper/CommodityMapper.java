@@ -34,9 +34,13 @@ public interface CommodityMapper {
     /**首页分类展示8条商品*/
     List<Commodity> queryCommodityByCategory(@Param("category") String category);
     /**产品清单分类分页展示商品*/
-    List<Commodity> queryAllCommodityByCategory(@Param("page") Integer page, @Param("count") Integer count, @Param("area") String area, @Param("school") String school,
+    List<Commodity> queryAllCommodityByCategory(@Param("page") Integer page, @Param("count") Integer count,
                                                 @Param("category") String category, @Param("minmoney") BigDecimal minmoney, @Param("maxmoney") BigDecimal maxmoney);
     /**查询产品清单分类分页展示商品的总数*/
-    Integer queryAllCommodityByCategoryCount(@Param("area") String area, @Param("school") String school, @Param("category") String category,
+    Integer queryAllCommodityByCategoryCount(@Param("category") String category,
                                              @Param("minmoney") BigDecimal minmoney, @Param("maxmoney") BigDecimal maxmoney);
+
+    List<Commodity> queryAllCommodityByCategorySorted(@Param("page") Integer page, @Param("count") Integer count,
+                                                      @Param("category") String category, @Param("minmoney") BigDecimal minmoney, @Param("maxmoney") BigDecimal maxmoney,
+                                                      @Param("sortId") Integer sortId);
 }

@@ -1,7 +1,6 @@
 package com.service.impl;
 
 import com.entity.Category;
-import com.entity.News;
 import com.mapper.CategoryMapper;
 import com.service.CategoryService;
 import org.apache.ibatis.annotations.Param;
@@ -35,5 +34,10 @@ public class CategoryServiceImpl implements CategoryService {
 
     public Integer getCount(){
         return categoryMapper.getCount().intValue();
+    }
+
+    @Override
+    public List<Category> selectAll() {
+        return categoryMapper.selectAll();
     }
 }

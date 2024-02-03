@@ -683,7 +683,7 @@
         countDown();
         masonry();
         stickyHeader();
-        productVariantsAjax();
+//        productVariantsAjax();
         productThumbnailChange();
         bootstrapSelect();
         slickConfig();
