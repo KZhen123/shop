@@ -1,6 +1,8 @@
 package com.mapper;
 
+import com.entity.Category;
 import com.entity.Comment;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +23,12 @@ public interface CommentMapper {
     Comment queryById(String cid);
     /**删除评论*/
     Integer deleteComment(String cid);
+
+    List<Comment> queryPageList(@Param("begin") Integer begin, @Param("size") Integer size,@Param("content") String content);
+
+    Long getCount(String content);
+
+    boolean setInvalid(@Param("cid") String cid);
+
+    boolean setValid(@Param("cid") String cid);
 }

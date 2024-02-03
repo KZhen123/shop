@@ -21,4 +21,22 @@
     <update id="deleteComment" parameterType="java.lang.String">
         update comment set commstatus=2 where cid=#{cid}
     </update>
+
+    <select id="queryPageList" resultType="com.entity.Comment">
+        select cid,commid,cuserid,spuserid,content,commtime,commstatus
+        from comment
+        where content like concat('%',#{content},'%')
+        limit #{begin}, #{size}
+    </select>
+    <select id="getCount" resultType="java.lang.Long">
+        select count(1)
+        from comment
+        where content like concat('%',#{content},'%')
+    </select>
+    <update id="setInvalid">
+        update comment set commstatus=3 where cid=#{cid}
+    </update>
+    <update id="setValid">
+        update comment set commstatus=1 where cid=#{cid}
+    </update>
 </mapper>

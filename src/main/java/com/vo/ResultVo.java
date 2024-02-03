@@ -23,6 +23,11 @@ public class ResultVo {
         this.message = message;
     }
 
+    public ResultVo(boolean flag, Integer status) {
+        this.flag = flag;
+        this.status = status;
+    }
+
     public Integer getStatus() {
         return status;
     }

@@ -5,6 +5,8 @@ import com.entity.*;
 import com.service.*;
 import com.util.KeyUtil;
 import com.util.StatusCode;
+import com.vo.CommentVo;
+import com.vo.LayuiPageVo;
 import com.vo.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -173,6 +175,97 @@ public class CommentReplyController {
             return new ResultVo(false, StatusCode.ERROR,"删除失败");
         }
         return new ResultVo(false,StatusCode.ACCESSERROR,"禁止操作");
+    }
+
+    /**
+     * 管理员-获取评论和回复列表
+     * content： 条件查询的评论内容
+     * */
+    @RequestMapping(value = "/comment/selectPage", produces = "application/json")
+    @ResponseBody
+    public LayuiPageVo selectCommentPage(@RequestParam int size, @RequestParam int page,
+                                  @RequestParam(value = "content", required = false, defaultValue = "") String content) {
+        List<Comment> list = commentService.queryPage(page, size,content);
+        int count = commentService.getCount(content);
+        return new LayuiPageVo("", 200, count, list);
+    }
+    /**
+     * 管理员-获取回复列表
+     * content：条件查询的评论内容
+     * */
+    @RequestMapping(value = "/reply/selectPage", produces = "application/json")
+    @ResponseBody
+    public LayuiPageVo selectReplyPage(@RequestParam int size, @RequestParam int page,
+                                         @RequestParam(value = "recontent", required = false, defaultValue = "") String content) {
+        List<Reply> list = replyService.queryPage(page, size,content);
+        int count =  replyService.getCount(content);
+        return new LayuiPageVo("", 200, count, list);
+    }
+
+    /**
+     * 评论违规
+     * */
+    @RequestMapping(value = "/comment/setInvalid", produces = "application/json")
+    @ResponseBody
+    public ResultVo setInvalid(@RequestParam String cid) {
+        boolean res = commentService.setInvalid(cid);
+        ResultVo result;
+        if (res) {
+            result = new ResultVo(true, StatusCode.OK);
+        } else {
+            result = new ResultVo(false, StatusCode.SERVERERROR, "设置失败");
+        }
+        return result;
+    }
+
+    /**
+     * 评论通过审核
+     * */
+    @RequestMapping(value = "/comment/setValid", produces = "application/json")
+    @ResponseBody
+    public ResultVo setValid(@RequestParam String cid) {
+        boolean res = commentService.setValid(cid);
+        ResultVo result;
+        if (res) {
+            result = new ResultVo(true, StatusCode.OK);
+        } else {
+            result = new ResultVo(false, StatusCode.SERVERERROR, "设置失败");
+        }
+        return result;
+    }
+
+
+    /**
+     * 回复通过审核
+     * */
+    @RequestMapping(value = "/reply/setValid", produces = "application/json")
+    @ResponseBody
+    public ResultVo setReplyValid(@RequestParam String rid) {
+        boolean res = replyService.setValid(rid);
+        ResultVo result;
+        if (res) {
+            result = new ResultVo(true, StatusCode.OK);
+        } else {
+            result = new ResultVo(false, StatusCode.SERVERERROR, "设置失败");
+        }
+        return result;
+    }
+
+
+    /**
+     * 回复违规
+     * */
+    @RequestMapping(value = "/reply/setInvalid", produces = "application/json")
+    @ResponseBody
+    public ResultVo setReplyInvalid(@RequestParam String rid) {
+        boolean res = replyService.setInvalid(rid);
+        ResultVo result;
+        if (res) {
+            result = new ResultVo(true, StatusCode.OK);
+        } else {
+            result = new ResultVo(false, StatusCode.SERVERERROR, "设置失败");
+        }
+        return result;
     }
 
 }

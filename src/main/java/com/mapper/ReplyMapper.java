@@ -1,6 +1,7 @@
 package com.mapper;
 
 import com.entity.Reply;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -21,4 +22,12 @@ public interface ReplyMapper {
     Reply queryById(String rid);
     /**删除回复*/
     Integer deleteReply(Reply reply);
+
+    List<Reply> queryPageList(@Param("begin") Integer begin, @Param("size") Integer size, @Param("recontent") String recontent);
+
+    Long getCount(String recontent);
+
+    boolean setInvalid(String rid);
+
+    boolean setValid(String rid);
 }

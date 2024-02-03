@@ -25,4 +25,21 @@
            <if test="cid != null">and cid = #{cid}</if>
        </where>
     </update>
+    <select id="queryPageList" resultType="com.entity.Reply">
+        select rid,cid,commid,cuserid,spuserid,recontent,ruserid,replytime,repstatus
+        from reply
+        where recontent like concat('%',#{recontent},'%')
+        limit #{begin}, #{size}
+    </select>
+    <select id="getCount" resultType="java.lang.Long">
+        select count(1)
+        from reply
+        where recontent like concat('%',#{recontent},'%')
+    </select>
+    <update id="setInvalid">
+        update reply set repstatus=3 where rid=#{rid}
+    </update>
+    <update id="setValid">
+        update reply set repstatus=1 where rid=#{rid}
+    </update>
 </mapper>

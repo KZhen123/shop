@@ -27,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.updateByPrimaryKey(category);
     }
 
-    public List<Category> queryPageList(@Param("page") Integer page, @Param("size") Integer size){
+    public List<Category> queryPageList(Integer page, Integer size){
         int begin = (page - 1) * size;
         return categoryMapper.queryPageList(begin, size);
     }

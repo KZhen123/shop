@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,5 +38,23 @@ public class ReplyService {
     /**删除回复*/
     public Integer deleteReply(Reply reply){
         return replyMapper.deleteReply(reply);
+    }
+
+    public List<Reply> queryPage(int page, int size, String content) {
+        int begin = (page - 1) * size;
+        List<Reply> replies = replyMapper.queryPageList(begin, size, content);
+        return replies;
+    }
+
+    public int getCount(String content) {
+        return replyMapper.getCount(content).intValue();
+    }
+
+    public boolean setValid(String rid) {
+        return replyMapper.setValid(rid);
+    }
+
+    public boolean setInvalid(String rid) {
+        return replyMapper.setInvalid(rid);
     }
 }

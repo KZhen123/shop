@@ -215,6 +215,22 @@ public class AdminController {
     }
 
     /**
+     * 管理员留言列表
+     * */
+    @GetMapping("/admin/comment")
+    public String adminComment(){
+        return "/admin/comment/commentList";
+    }
+
+    /**
+     * 管理员回复列表
+     * */
+    @GetMapping("/admin/reply")
+    public String adminReply(){
+        return "/admin/comment/replyList";
+    }
+
+    /**
      * 分页管理员查看各类商品信息
      *前端传入页码、分页数量
      *前端传入商品信息状态码（commstatus）-->全部:100，违规:0，已审核:1，待审核:3 已完成:4
