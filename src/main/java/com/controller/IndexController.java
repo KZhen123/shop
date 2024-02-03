@@ -112,18 +112,6 @@ public class IndexController {
     }
 
 
-    /**
-     * 跳转到产品清单搜索界面
-     * */
-    @GetMapping("/product-search")
-    public String toProductSearchs(String keys, ModelMap modelMap) {
-        if(keys==null){
-            return "/error/404";
-        }
-        modelMap.put("keys",keys);
-        return "/common/product-search";
-    }
-
     /**用户个人中心默认展示图*/
     @GetMapping("/home/console")
     public String homeconsole(){

@@ -78,7 +78,7 @@ public class Commodity implements Serializable {
     /**
      * 商品类别
      */
-    private String category;
+    private Integer category;
     /**
      * 简介图
      */

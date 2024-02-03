@@ -261,37 +261,37 @@ public class CommodityController {
         }
     }
 
-    /**
-     * 首页分类展示商品 --> 按照分类查询商品
-     * 前端传入商品类别（category）
-     * */
-    @ResponseBody
-    @GetMapping("/index/product/{category}")
-    public ResultVo indexCommodity(@PathVariable("category") String category) {
-        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
-        for (Commodity commodity : commodityList) {
-            /**查询商品对应的其它图片*/
-            List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
-            commodity.setOtherimg(imagesList);
-        }
-            return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
-    }
+//    /**
+//     * 首页分类展示商品 --> 按照分类查询商品
+//     * 前端传入商品类别（category）
+//     * */
+//    @ResponseBody
+//    @GetMapping("/index/product/{category}")
+//    public ResultVo indexCommodity(@PathVariable("category") String category) {
+//        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
+//        for (Commodity commodity : commodityList) {
+//            /**查询商品对应的其它图片*/
+//            List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
+//            commodity.setOtherimg(imagesList);
+//        }
+//            return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
+//    }
 
-    /**
-     * 查询最新发布的8条商品
-     * */
-    @ResponseBody
-    @GetMapping("/product/latest")
-    public ResultVo latestCommodity() {
-        String category = "全部";
-        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
-        for (Commodity commodity : commodityList) {
-            /**查询商品对应的其它图片*/
-            List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
-            commodity.setOtherimg(imagesList);
-        }
-        return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
-    }
+//    /**
+//     * 查询最新发布的8条商品
+//     * */
+//    @ResponseBody
+//    @GetMapping("/product/latest")
+//    public ResultVo latestCommodity() {
+//        String category = "全部";
+//        List<Commodity> commodityList = commodityService.queryCommodityByCategory(category);
+//        for (Commodity commodity : commodityList) {
+//            /**查询商品对应的其它图片*/
+//            List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());
+//            commodity.setOtherimg(imagesList);
+//        }
+//        return new ResultVo(true,StatusCode.OK,"查询成功",commodityList);
+//    }
 
     /**
      * 产品清单分页数据
@@ -299,27 +299,28 @@ public class CommodityController {
      * 最低价（minmoney）、最高价（maxmoney）
      * 后端根据session查出个人本校信息（school）
      * */
-    @GetMapping("/list-number/{category}/{minmoney}/{maxmoney}")
+    @GetMapping("/list-number/{category}/{minmoney}/{maxmoney}/{name}")
     @ResponseBody
-    public PageVo productListNumber(@PathVariable("category") String category,
+    public PageVo productListNumber(@PathVariable("category") Integer category,
                                     @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
+                                    @PathVariable("name") String name,
                                     HttpSession session) {
-        Integer dataNumber = commodityService.queryAllCommodityByCategoryCount(category, minmoney, maxmoney);
+        Integer dataNumber = commodityService.queryAllCommodityByCategoryCount(category, minmoney, maxmoney,name);
         return new PageVo(StatusCode.OK,"查询成功",dataNumber);
     }
 
     /**
      * 产品清单界面
-     * 前端传入商品类别（category）、当前页码（nowPaging）、区域（area）
+     * 前端传入商品类别（category）、当前页码（nowPaging）、name
      * 最低价（minmoney）、最高价（maxmoney）、价格升序降序（price：0.不排序 1.升序 2.降序）、点击率升序降序（3：升序 4：降序）
      * 后端根据session查出个人本校信息（school）
      * */
-    @GetMapping("/product-listing/{category}/{nowPaging}/{minmoney}/{maxmoney}/{sortId}")
+    @GetMapping("/product-listing/{category}/{nowPaging}/{minmoney}/{maxmoney}/{sortId}/{name}")
     @ResponseBody
-    public ResultVo productlisting(@PathVariable("category") String category, @PathVariable("nowPaging") Integer page,
+    public ResultVo productlisting(@PathVariable("category") Integer category, @PathVariable("nowPaging") Integer page,
                                   @PathVariable("minmoney") BigDecimal minmoney, @PathVariable("maxmoney") BigDecimal maxmoney,
-                                 @PathVariable("sortId") Integer sortId, HttpSession session) {
-        List<Commodity> commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, category, minmoney, maxmoney,sortId);
+                                 @PathVariable("sortId") Integer sortId,@PathVariable("name") String name, HttpSession session) {
+        List<Commodity> commodityList = commodityService.queryAllCommodityByCategory((page - 1) * 16, 16, category, minmoney, maxmoney,sortId,name);
         for (Commodity commodity : commodityList) {
             /**查询商品对应的其它图片*/
             List<String> imagesList = commimagesService.LookGoodImages(commodity.getCommid());

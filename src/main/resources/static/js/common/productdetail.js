@@ -312,38 +312,3 @@ var app = new Vue({
     }
 });
 lookallcomment();
-var app = new Vue({
-    el: '#latestp',
-    data() {
-        return {
-            latestData: [],
-        }
-    },
-    mounted: function () {
-        this.getLatestProduct();
-        window.getLatestProduct = this.getLatestProduct;
-    },
-    methods: {
-        getLatestProduct: function () {
-            var that = this;
-            $.ajax({
-                url: basePath + '/product/latest',
-                data: "",
-                type: 'GET',
-                contentType: "application/json;charset=UTF-8",
-                dataType: 'json',
-                success: function(msg) {
-                    if(msg.status === 200) {
-                        that.latestData = msg.data;
-                    }
-                },error:function () {
-                    layer.msg("系统错误", {
-                        time: 1000,
-                        icon: 5,
-                        offset: '100px'
-                    });
-                }
-            })
-        }
-    }
-});

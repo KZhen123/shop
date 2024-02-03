@@ -1,15 +1,11 @@
 package com.service;
 
-import com.entity.Category;
 import com.entity.Comment;
 import com.mapper.CommentMapper;
-import com.vo.CommentVo;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

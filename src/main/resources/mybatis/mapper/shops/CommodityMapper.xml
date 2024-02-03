@@ -86,39 +86,30 @@
         select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
         from commodity
         <where>
-            <if test="category != '全部'">and category = #{category}</if>
+            <if test="category != 0">and category = #{category}</if>
             and commstatus=1
         </where>
             order by updatetime desc limit 0,8
-    </select>
-    <!-- 产品清单分类分页展示商品 -->
-    <select id="queryAllCommodityByCategory" resultType="com.entity.Commodity">
-        select commid,commname,orimoney,thinkmoney,school,updatetime,image
-        from commodity
-        <where>
-            <if test="category != '全部'">and category = #{category}</if>
-            <if test="(minmoney != null) and (maxmoney != null)">and thinkmoney between #{minmoney} and #{maxmoney}</if>
-            and commstatus=1
-        </where>
-        order by updatetime desc limit #{page},#{count}
     </select>
     <!-- 查询产品清单分类分页展示商品的总数 -->
     <select id="queryAllCommodityByCategoryCount" resultType="java.lang.Integer">
         select count(*) from commodity
         <where>
-            <if test="category != '全部'">and category = #{category}</if>
+            <if test="category != 0">and category = #{category}</if>
             <if test="minmoney != null">and thinkmoney &gt;= #{minmoney}</if>
             <if test="maxmoney != null">and thinkmoney &lt;= #{maxmoney}</if>
             and commstatus=1
+            <if test="commname != 'null'">and commname like concat ('%',#{commname},'%')</if>
         </where>
     </select>
     <select id="queryAllCommodityByCategorySorted" resultType="com.entity.Commodity">
         select commid,commname,orimoney,thinkmoney,school,updatetime,image
         from commodity
         <where>
-            <if test="category != '全部'">and category = #{category}</if>
+            <if test="category != 0">and category = #{category}</if>
             <if test="(minmoney != null) and (maxmoney != null)">and thinkmoney between #{minmoney} and #{maxmoney}</if>
             and commstatus=1
+            <if test="commname != 'null'">and commname like concat ('%',#{commname},'%')</if>
         </where>
         <if test="sortId==1">order by thinkmoney asc</if>
         <if test="sortId==2">order by thinkmoney desc</if>

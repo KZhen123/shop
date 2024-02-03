@@ -62,16 +62,12 @@ public class CommodityService {
     public List<Commodity> queryCommodityByCategory(String category){
         return commodityMapper.queryCommodityByCategory(category);
     }
-    /**产品清单分类分页展示商品*/
-    public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,String category,BigDecimal minmoney,BigDecimal maxmoney){
-        return commodityMapper.queryAllCommodityByCategory(page,count,category,minmoney,maxmoney);
-    }
     /**产品清单分类分页展示商品-排序*/
-    public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,String category,BigDecimal minmoney,BigDecimal maxmoney,Integer sortId){
-        return commodityMapper.queryAllCommodityByCategorySorted(page,count,category,minmoney,maxmoney,sortId);
+    public List<Commodity> queryAllCommodityByCategory(Integer page,Integer count,Integer category,BigDecimal minmoney,BigDecimal maxmoney,Integer sortId,String commname){
+        return commodityMapper.queryAllCommodityByCategorySorted(page,count,category,minmoney,maxmoney,sortId,commname);
     }
     /**查询产品清单分类分页展示商品的总数*/
-    public Integer queryAllCommodityByCategoryCount(String category, BigDecimal minmoney, BigDecimal maxmoney){
-        return commodityMapper.queryAllCommodityByCategoryCount(category,minmoney,maxmoney);
+    public Integer queryAllCommodityByCategoryCount(Integer category, BigDecimal minmoney, BigDecimal maxmoney,String commname){
+        return commodityMapper.queryAllCommodityByCategoryCount(category,minmoney,maxmoney,commname);
     }
 }
