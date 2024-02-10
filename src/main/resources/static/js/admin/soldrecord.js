@@ -12,7 +12,7 @@ layui.use(['form', 'element', 'util', 'carousel', 'laypage', 'layer','table'], f
             {field: 'id', title: '订单号',width:180, align:'center'}
             , {field: 'commname', title: '名称', width: 300, align:'center'}
             , {field: 'commdesc', title: '描述', width: 639, align:'center'}
-            , {field: 'thinkmoney', title: '售价', width: 80, align:'center'}
+            , {field: 'money', title: '售价', width: 80, align:'center'}
             , {field: 'soldtime', title: '售出时间', width: 160,sort: true, align:'center'}
             , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:100, align:'center'}
         ]]

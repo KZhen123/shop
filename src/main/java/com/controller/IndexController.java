@@ -73,15 +73,6 @@ public class IndexController {
     }
 
     /**
-     * 用户更换手机号
-     * */
-    @RequiresPermissions("user:userinfo")
-    @GetMapping("/user/phone")
-    public String userphone(){
-        return "/user/updatephone";
-    }
-
-    /**
      * 用户商品列表
      * */
     @GetMapping("/user/product")
@@ -90,20 +81,6 @@ public class IndexController {
     }
 
     /**
-     * 通知消息
-     * */
-    @GetMapping("/user/message")
-    public String commonmessage(){
-        return "/user/message/message";
-    }
-    /**
-     * 弹出式通知消息
-     * */
-    @GetMapping("/user/alertmessage")
-    public String alertmessage(){
-        return "/user/message/alertmessage";
-    }
-    /**
      * 跳转到产品清单界面
      * */
     @GetMapping("/product-listing")
@@ -111,29 +88,8 @@ public class IndexController {
         return "/common/product-listing";
     }
 
-
-    /**用户个人中心默认展示图*/
-    @GetMapping("/home/console")
-    public String homeconsole(){
-        return "/admin/home/console";
-    }
-
     /**
-     * 管理员首页默认展示图
-     * */
-    @GetMapping("/echars/console")
-    public String echars(){
-        return "/admin/echars/console";
-    }
-
-
-    @GetMapping("/app/message/index")
-    public String appmessageindex(){
-        return "/admin/app/message/index";
-    }
-
-    /**
-     * 用户收藏列表
+     * 用户购物车列表
      * */
     @GetMapping("/user/collect")
     public String usercollect(){
@@ -145,15 +101,15 @@ public class IndexController {
      * */
     @GetMapping("/user/sold")
     public String sold(){
-        return "/user/sold/soldrecord";
+        return "/user/order/soldrecord";
     }
 
     /**
-     * 销量列表
+     * 用户购买记录
      * */
-    @GetMapping("/admin/sold")
-    public String adminSold(){
-        return "/admin/sold/soldrecord";
+    @GetMapping("/user/buy")
+    public String buy(){
+        return "/user/order/buyRecord";
     }
 
 }

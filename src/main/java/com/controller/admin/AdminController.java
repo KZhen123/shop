@@ -22,11 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-/**
- * @Author: hlt
- * @Description: 管理员控制器
- * @Date: 2020/3/10 16:54
- */
 @Controller
 public class AdminController {
     @Autowired
@@ -37,8 +32,6 @@ public class AdminController {
     private UserInfoService userInfoService;
     @Autowired
     private CommodityService commodityService;
-    @Autowired
-    private NoticesService noticesService;
 
     /**
      * 管理员跳转登录
@@ -51,13 +44,11 @@ public class AdminController {
     /**
      * 管理员登录
      * 1.判断输入账号的类型
-     * 2.判断是否为管理员或者超级管理员
      * 3.登录
      * */
     @ResponseBody
     @PostMapping("/admin/login")
     public ResultVo adminlogin(@RequestBody Login login, HttpSession session){
-        System.out.println("测试是否进入！！！");
         String account=login.getUsername();
         String password=login.getPassword();
         String vercode=login.getVercode();
@@ -89,7 +80,7 @@ public class AdminController {
             Login login1 = loginService.userLogin(login);
             //查询登录者的权限
             Integer roleId = userRoleService.LookUserRoleId(login1.getUserid());
-            if (roleId == 2 || roleId == 3){
+            if (roleId == 2){
                 session.setAttribute("admin",login1.getUsername());
                 session.setAttribute("username",login1.getUsername());
                 return new ResultVo(true,StatusCode.OK,"登录成功");
@@ -113,7 +104,6 @@ public class AdminController {
     /**
      * 管理员列表
      * */
-    @RequiresPermissions("admin:set")
     @GetMapping("/admin/adminlist")
     public String adminlist(){
         return "/admin/user/adminlist";
@@ -142,22 +132,14 @@ public class AdminController {
         if (roleid == 2){
             Integer i = loginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1){
-                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(2).setIdentity("网站管理员"));
-                /**发出设置为管理员的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("恭喜您已被设置为网站管理员，努力维护网站的良好氛围。");
-                noticesService.insertNotices(notices);
+                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(2));
                 return new ResultVo(true, StatusCode.OK, "设置管理员成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "设置管理员失败");
         }else if (roleid == 1){
             Integer i = loginService.updateLogin(new Login().setUserid(userid).setRoleid(roleid));
             if (i == 1){
-                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(1).setIdentity("网站用户"));
-                /**发出设置为网站用户的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("您已被设置为网站用户，希望您再接再厉。");
-                noticesService.insertNotices(notices);
+                userRoleService.UpdateUserRole(new UserRole().setUserid(userid).setRoleid(1));
                 return new ResultVo(true, StatusCode.OK, "设置成员成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "设置成员失败");
@@ -173,24 +155,14 @@ public class AdminController {
     @ResponseBody
     public ResultVo adminuserlist(@PathVariable("userid") String userid,@PathVariable("userstatus") Integer userstatus) {
         if (userstatus == 0){
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
             Integer j = userInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
-            if (i ==1 && j == 1){
-                /**发出封号的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("因为您的不良行为，您在该网站的账号已被封号。");
-                noticesService.insertNotices(notices);
+            if (j == 1){
                 return new ResultVo(true, StatusCode.OK, "封号成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "封号失败");
         }else if (userstatus == 1){
-            Integer i = loginService.updateLogin(new Login().setUserid(userid).setUserstatus(userstatus));
             Integer j = userInfoService.UpdateUserInfo(new UserInfo().setUserid(userid).setUserstatus(userstatus));
-            if (i ==1 && j == 1){
-                /**发出解封的系统通知*/
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(userid).setTpname("系统通知")
-                        .setWhys("您在该网站的账号已被解封，希望您保持良好的行为。");
-                noticesService.insertNotices(notices);
+            if (j == 1){
                 return new ResultVo(true, StatusCode.OK, "解封成功");
             }
             return new ResultVo(true, StatusCode.ERROR, "解封失败");
@@ -215,25 +187,9 @@ public class AdminController {
     }
 
     /**
-     * 管理员留言列表
-     * */
-    @GetMapping("/admin/comment")
-    public String adminComment(){
-        return "/admin/comment/commentList";
-    }
-
-    /**
-     * 管理员回复列表
-     * */
-    @GetMapping("/admin/reply")
-    public String adminReply(){
-        return "/admin/comment/replyList";
-    }
-
-    /**
      * 分页管理员查看各类商品信息
      *前端传入页码、分页数量
-     *前端传入商品信息状态码（commstatus）-->全部:100，违规:0，已审核:1，待审核:3 已完成:4
+     *前端传入商品信息状态码（commstatus）-->全部:100，正常:1，已完成:2
      * 因为是管理员查询，将userid设置为空
      */
     @GetMapping("/admin/commodity/{commstatus}")
@@ -248,32 +204,6 @@ public class AdminController {
             Integer dataNumber = commodityService.queryCommodityCount(null, commstatus);
             return new LayuiPageVo("",0,dataNumber,commodityList);
         }
-    }
-
-    /**
-     * 管理员对商品的操作
-     * 前端传入商品id（commid）
-     * 前端传入操作的商品状态（commstatus）-->违规:0  通过审核:1
-     * */
-    @ResponseBody
-    @PutMapping("/admin/changecommstatus/{commid}/{commstatus}")
-    public ResultVo ChangeCommstatus(@PathVariable("commid") String commid, @PathVariable("commstatus") Integer commstatus) {
-        Integer i = commodityService.ChangeCommstatus(commid, commstatus);
-        if (i == 1){
-            /**发出商品审核结果的系统通知*/
-            Commodity commodity = commodityService.LookCommodity(new Commodity().setCommid(commid));
-            if (commstatus == 0){
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("商品审核")
-                        .setWhys("您的商品 <a href=/product-detail/"+commodity.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 未通过审核，目前不支持公开发布。");
-                noticesService.insertNotices(notices);
-            }else if (commstatus == 1){
-                Notices notices = new Notices().setId(KeyUtil.genUniqueKey()).setUserid(commodity.getUserid()).setTpname("商品审核")
-                        .setWhys("您的商品 <a href=/product-detail/"+commodity.getCommid()+" style=\"color:#08bf91\" target=\"_blank\" >"+commodity.getCommname()+"</a> 已通过审核，快去看看吧。");
-                noticesService.insertNotices(notices);
-            }
-            return new ResultVo(true,StatusCode.OK,"操作成功");
-        }
-        return new ResultVo(false,StatusCode.ERROR,"操作失败");
     }
 
 }

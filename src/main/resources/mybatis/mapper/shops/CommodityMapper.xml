@@ -1,15 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mapper.CommodityMapper">
-
+    <resultMap id="BaseResultMap" type="com.entity.Commodity">
+        <id column="commid" jdbcType="INTEGER" property="commid" />
+        <result column="commname" jdbcType="VARCHAR" property="commname" />
+        <result column="commdesc" jdbcType="VARCHAR" property="commdesc" />
+        <result column="money" jdbcType="DECIMAL" property="money" />
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+        <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+        <result column="commstatus" jdbcType="INTEGER" property="commstatus" />
+        <result column="category" jdbcType="INTEGER" property="category" />
+        <result column="image" jdbcType="VARCHAR" property="image" />
+        <result column="userid" jdbcType="VARCHAR" property="userid" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        commid,
+        commname,
+        commdesc,
+        money,
+        createtime,
+        endtime,
+        commstatus,
+        category,
+        image,
+        userid
+    </sql>
     <!-- 插入商品 -->
     <insert id="InsertCommodity" parameterType="com.entity.Commodity">
-        insert into commodity (commid,commname,commdesc,orimoney,thinkmoney,school,category,image,userid) value
-        (#{commid},#{commname},#{commdesc},#{orimoney},#{thinkmoney},#{school},#{category},#{image},#{userid})
+        insert into commodity (commid,commname,commdesc,money,category,image,userid) value
+        (#{commid},#{commname},#{commdesc},#{money},#{category},#{image},#{userid})
     </insert>
+    <delete id="delete">
+        delete from commodity
+        where commid=#{commid}
+    </delete>
     <!-- 查询商品详情 -->
     <select id="LookCommodity" resultType="com.entity.Commodity" parameterType="com.entity.Commodity">
-        select commid,commname,commdesc,orimoney,thinkmoney,school,createtime,commstatus,rednumber,category,image,userid from commodity
+        select
+        <include refid="Base_Column_List" />
+        from commodity
         where commid=#{commid}
     </select>
     <!-- 修改商品 -->
@@ -22,23 +51,14 @@
             <if test="commdesc!=null">
                 commdesc=#{commdesc},
             </if>
-            <if test="orimoney!=null">
-                orimoney=#{orimoney},
-            </if>
-            <if test="thinkmoney!=null">
-                thinkmoney=#{thinkmoney},
-            </if>
-            <if test="rednumber!=null">
-                rednumber=rednumber+1,
+            <if test="money!=null">
+                money=#{money},
             </if>
             <if test="category!=null">
                 category=#{category},
             </if>
             <if test="image!=null">
                 image=#{image},
-            </if>
-            <if test="updatetime!=null">
-                updatetime=#{updatetime},
             </if>
             <if test="commstatus!=null">
                 commstatus=#{commstatus},
@@ -52,11 +72,10 @@
     </update>
     <!-- 通过商品名分页模糊查询 -->
     <select id="queryCommodityByName" resultType="com.entity.Commodity">
-        select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
+        select
+        <include refid="Base_Column_List" />
         from commodity
         where commname like #{commname} and commstatus=1
-        order by
-        updatetime desc
         LIMIT #{page},#{count}
     </select>
     <!--模糊查询商品总数-->
@@ -65,13 +84,14 @@
     </select>
     <!-- 分页展示各类状态的商品信息 -->
     <select id="queryAllCommodity" resultType="com.entity.Commodity">
-        select commid,commname,commdesc,updatetime,category,commstatus
+        select
+        <include refid="Base_Column_List" />
         from commodity
         <where>
             <if test="commstatus != null">and commstatus = #{commstatus}</if>
             <if test="userid != null">and userid = #{userid}</if>
         </where>
-        order by updatetime desc limit #{page},#{count}
+        limit #{page},#{count}
     </select>
     <!-- 查询商品各类状态的总数 -->
     <select id="queryCommodityCount" resultType="java.lang.Integer">
@@ -81,40 +101,25 @@
             <if test="userid != null">and userid = #{userid}</if>
         </where>
     </select>
-    <!-- 首页分类展示8条商品 -->
-    <select id="queryCommodityByCategory" resultType="com.entity.Commodity">
-        select commid,commname,commdesc,orimoney,thinkmoney,school,updatetime,image
-        from commodity
-        <where>
-            <if test="category != 0">and category = #{category}</if>
-            and commstatus=1
-        </where>
-            order by updatetime desc limit 0,8
-    </select>
     <!-- 查询产品清单分类分页展示商品的总数 -->
     <select id="queryAllCommodityByCategoryCount" resultType="java.lang.Integer">
         select count(*) from commodity
-        <where>
-            <if test="category != 0">and category = #{category}</if>
-            <if test="minmoney != null">and thinkmoney &gt;= #{minmoney}</if>
-            <if test="maxmoney != null">and thinkmoney &lt;= #{maxmoney}</if>
+        where 1=1
             and commstatus=1
             <if test="commname != 'null'">and commname like concat ('%',#{commname},'%')</if>
-        </where>
     </select>
     <select id="queryAllCommodityByCategorySorted" resultType="com.entity.Commodity">
-        select commid,commname,orimoney,thinkmoney,school,updatetime,image
+        select
+        <include refid="Base_Column_List" />
         from commodity
-        <where>
-            <if test="category != 0">and category = #{category}</if>
-            <if test="(minmoney != null) and (maxmoney != null)">and thinkmoney between #{minmoney} and #{maxmoney}</if>
+        where 1=1
             and commstatus=1
             <if test="commname != 'null'">and commname like concat ('%',#{commname},'%')</if>
-        </where>
-        <if test="sortId==1">order by thinkmoney asc</if>
-        <if test="sortId==2">order by thinkmoney desc</if>
-        <if test="sortId==3">order by rednumber asc</if>
-        <if test="sortId==4">order by rednumber desc</if>
         limit #{page},#{count}
+    </select>
+    <select id="selectAll" resultType="com.entity.Commodity">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
     </select>
 </mapper>

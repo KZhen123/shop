@@ -10,14 +10,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author hlt
- * @since 2019-12-25
- */
 @AllArgsConstructor//全参构造
 @NoArgsConstructor//无参构造
 @Data
@@ -39,31 +31,19 @@ public class Commodity implements Serializable {
      */
     private String commdesc;
     /**
-     * 原价
-     */
-    private BigDecimal orimoney;
-    /**
      * 售价
      */
-    private BigDecimal thinkmoney;
-    /**
-     * 商品所在学校
-     */
-    private String school;
+    private BigDecimal money;
     /**
      * 发布时间
      */
     private Date createtime;
     /**
-     * 修改时间
-     */
-    private Date updatetime;
-    /**
      * 结束时间
      */
     private Date endtime;
     /**
-     * 0违规 1正常 2删除  3待审核
+     * 保留字段 1正常
      */
     private Integer commstatus;
     /**
@@ -71,10 +51,6 @@ public class Commodity implements Serializable {
      * */
     private List<String> otherimg;
 
-    /**
-     * 浏览量
-     */
-    private Integer rednumber;
     /**
      * 商品类别
      */
@@ -87,5 +63,10 @@ public class Commodity implements Serializable {
      * 用户id
      */
     private String userid;
+
+    /**
+     * 类别名称
+     * */
+    private String categoryName;
 
 }

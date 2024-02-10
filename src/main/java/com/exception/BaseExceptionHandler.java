@@ -4,9 +4,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * @Author: hlt
  * @Description: 统一异常处理类
- * @Date: 2019/12/27 16:09
  */
 
 @ControllerAdvice

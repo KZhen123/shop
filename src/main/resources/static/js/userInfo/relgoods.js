@@ -4,18 +4,14 @@ var app = new Vue({
         return {
             listimages: [],
             mainimg: "",
-            videourl: ""
         }
     },
     mounted: function () {
-        //将vue中的函数设置成全局的
         window.showlistimages = this.showlistimages;
         window.setmainimgurl = this.setmainimgurl;
-        window.setvideourl = this.setvideourl;
 
         window.getlistimages = this.getlistimages;
         window.getmainimgurl = this.getmainimgurl;
-        window.getvideourl = this.getvideourl;
     },
     methods: {
         showlistimages: function (imgurl) {
@@ -23,7 +19,7 @@ var app = new Vue({
             if (that.listimages.length !== 3) {
                 var object = new Object();
                 object["imgsrc"] = imgurl;
-                that.listimages.push(object);//向vue数组中添加图片
+                that.listimages.push(object);//向数组中添加图片
             }
         },getlistimages: function () {
             var that = this;
@@ -34,15 +30,9 @@ var app = new Vue({
         },getmainimgurl: function () {
             var that = this;
             return that.mainimg;
-        },setvideourl: function (videosrc) {
-            var that = this;
-            that.videourl = videosrc;
-        },getvideourl: function () {
-            var that = this;
-            return that.videourl;
         },delimage: function (ids) {
             var that = this;
-            that.listimages.splice(ids, 1);//从vue数组中删除此图
+            that.listimages.splice(ids, 1);//从数组中删除此图
         },mouseOver: function (id) {
             $("#del" + id).show();
         }, mouseLeave: function (id) {
@@ -116,7 +106,7 @@ layui.use(['form', 'upload', 'element'], function () {
     });
     upload.render({
         elem: '#test2'
-        , url: basePath + '/relgoods/video'
+        , url: basePath + '/relgoods/pic'
         , accept: 'images' //图片
         , size: 1024 * 20
         , exts: 'png|jpg'
@@ -151,57 +141,8 @@ layui.use(['form', 'upload', 'element'], function () {
             });
         }
     });
-    upload.render({
-        elem: '#test1'
-        , url: basePath + '/relgoods/video'
-        , accept: 'video' //视频
-        , size: 1024 * 400
-        , exts: 'mp4'
-        , progress: function (n) {
-            var percent = n + '%'; //获取进度百分比
-            layer.msg(percent, {
-                icon: 16
-                , shade: 0.01
-            });
-        }
-        , done: function (res) {
-            //如果上传失败
-            if (res.code > 0) {
-                return layer.msg('上传失败');
-            } else {
-                layer.closeAll('loading');
-                layer.msg('上传成功', {
-                    time: 1000,
-                    icon: 1,
-                    offset: '150px'
-                });
-                $("#videosamplex").show();
-                var videoObject = {
-                    container: '.videosamplex',
-                    variable: 'player',
-                    mobileCkControls:true,
-                    mobileAutoFull:false,
-                    h5container:'#videoplayer',
-                    loop:true,
-                    volume:0.5,
-                    video:basePath + res.data.src
-                };
-                var player=new ckplayer(videoObject);
-                setvideourl(res.data.src);
-            }
-        }
-        , error: function () {
-            layer.closeAll('loading');
-            layer.msg('上传失败', {
-                time: 1000,
-                icon: 2,
-                offset: '150px'
-            });
-        }
-    });
 
     form.on('submit(demo1)', function (data) {
-        var vuevideo=getvideourl();
         var vuemainimg=getmainimgurl();
         var vuelistimages=getlistimages();
         if(vuemainimg.length===0){
@@ -237,12 +178,8 @@ layui.use(['form', 'upload', 'element'], function () {
         var object = new Object();
         object["commname"] = data.field.commname;
         object["commdesc"] = data.field.commdesc;
-        object["videourl"] = vuevideo;
-        object["orimoney"] = data.field.orimoney;
-        object["thinkmoney"] = data.field.thinkmoney;
+        object["money"] = data.field.money;
         object["category"] = data.field.category;
-        object["common"] = data.field.common;
-        object["common2"] = data.field.common2;
         object["image"] = vuemainimg;
         object["otherimg"] = rellistimgs;
         var jsonData = JSON.stringify(object);
@@ -267,7 +204,7 @@ layui.use(['form', 'upload', 'element'], function () {
                 layer.closeAll('loading');
             },
             success: function (data) {
-                layer.msg("发布成功，请等待审核", {
+                layer.msg("发布成功！", {
                     time: 1000,
                     icon: 1,
                     offset: '100px'
@@ -295,7 +232,6 @@ layui.use(['form', 'upload', 'element'], function () {
               $("#category").empty();
               $.each(data, function(i, cate) {
                     $("#category").append("<option selected value='"+cate.id+"'>"+cate.name+"</option>");
-                    console.log(cate.name);
               })
               //更新渲染下拉框
               form.render();

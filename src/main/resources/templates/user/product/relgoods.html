@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/static/css/userInfo/relgoods.css}"/>
     <script type="text/javascript" th:src="@{/static/layui/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/static/js/vue.js}"></script>
-    <script type="text/javascript" th:src="@{/static/js/userInfo/ckplayer.js}"></script>
-    <title>校园二手交易商城 | 发布商品</title>
+    <title>校园商城 | 发布商品</title>
     <script th:inline="javascript">
         var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
     </script>
@@ -26,30 +25,17 @@
     <div class="layui-form-item layui-form-text">
         <label class="layui-form-label"><span style="color: red">*</span>商品描述</label>
         <div class="layui-input-block">
-            <textarea placeholder="请输入商品描述(品牌型号，新旧程度，入手渠道，转手原因...)" name="commdesc" lay-verify="required" autocomplete="off"
+            <textarea placeholder="请输入商品描述" name="commdesc" lay-verify="required" autocomplete="off"
                       class="layui-textarea"></textarea>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">商品视频</label>
-        <div class="layui-inline">
-            <button type="button" class="layui-btn" id="test1">上传视频</button>
         </div>
     </div>
     <div class="videosamplex" id="videosamplex" style="width:600px;height:400px;margin-left:100px;margin-bottom:15px;display: none">
         <video id="videoplayer"></video>
     </div>
     <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label">商品原价</label>
-        <div class="layui-input-block">
-            <input type="number" name="orimoney" autocomplete="off" placeholder="请输入商品原价"
-                   class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item layui-form-text">
         <label class="layui-form-label"><span style="color: red">*</span>商品售价</label>
         <div class="layui-input-block">
-            <input type="number" name="thinkmoney" lay-verify="required" autocomplete="off" placeholder="请输入商品售价"
+            <input type="number" name="money" lay-verify="required" autocomplete="off" placeholder="请输入商品售价"
                    class="layui-input">
         </div>
     </div>
@@ -59,15 +45,6 @@
             <select name="category" id="category">
                 <option value=""></option>
             </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>常用选项</label>
-        <div class="layui-input-block">
-            <input type="radio" name="common" value="不议价" title="不议价" checked="">
-            <input type="radio" name="common" value="可小刀" title="可小刀">
-            <input type="radio" name="common2" value="可送货" title="可送货" checked="">
-            <input type="radio" name="common2" value="仅自提" title="仅自提">
         </div>
     </div>
     <div class="layui-form-item">

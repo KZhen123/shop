@@ -1,9 +1,7 @@
 package com.util;
 
 /**
- * @Author: hlt
  * @Description: 状态码工具
- * @Date: 2019/12/27 16:06
  */
 public class StatusCode {
 

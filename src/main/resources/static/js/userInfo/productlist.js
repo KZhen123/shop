@@ -18,14 +18,21 @@ function lookallproduct(stuatus) {
             , page: {
                 layout: ['limit', 'count', 'prev', 'page', 'next', 'skip']
                 , groups: 3
-                , limits: [20, 50, 100]
-                , limit: 20
+                , limits: [10,20, 50, 100]
+                , limit: 10
             }, cols: [[
                 {field: 'qid', title: 'ID',width:80, align:'center'}
                 , {field: 'commname', title: '名称', width: 300, align:'center'}
-                , {field: 'category', title: '类别', width: 100, align:'center'}
+                , {field: 'categoryName', title: '类别', width: 100, align:'center'}
                 , {field: 'commdesc', title: '描述', width: 700, align:'center'}
-                , {field: 'updatetime', title: '时间', width: 160,sort: true, align:'center'}
+                , {field: 'commstatus', title: '状态  ', width: 160,sort: true, align:'center',templet: function(d){
+                     if(d.commstatus == 1){
+                         return '<span class="layui-badge-rim" style="margin-right: 10px">正常</span>';
+                     }else if(d.commstatus == 4){
+                           return '<span class="layui-badge-rim" style="margin-right: 10px">已售出</span>';
+                       }
+                 }},
+                , {field: 'createtime', title: '创建时间', width: 160,sort: true, align:'center'}
                 , {fixed: 'right', title: '操作', toolbar: '#barDemo', width:250, align:'center'}
             ]], done: function (res, curr, count) {
                 var i=1;
@@ -64,55 +71,7 @@ function lookallproduct(stuatus) {
                 }, function(){
                     layer.closeAll();
                     $.ajax({
-                        url: basePath+'/user/changecommstatus/'+data.commid+"/2",
-                        data: "",
-                        contentType: "application/json;charset=UTF-8", //发送数据的格式
-                        type: "get",
-                        dataType: "json", //回调
-                        beforeSend: function () {
-                            layer.load(1, { //icon支持传入0-2
-                                content: '请稍等...',
-                                success: function (layero) {
-                                    layero.find('.layui-layer-content').css({
-                                        'padding-top': '39px',
-                                        'width': '60px'
-                                    });
-                                }
-                            });
-                        },
-                        complete: function () {
-                            layer.closeAll('loading');
-                        },
-                        success: function (data) {
-                            console.log(data)
-                            if(data.status===200){
-                                layer.msg(data.message, {
-                                    time: 1000,
-                                    icon: 1,
-                                    offset: '50px'
-                                }, function () {
-                                    location.reload();
-                                });
-                            }else {
-                                layer.msg(data.message, {
-                                    time: 1000,
-                                    icon: 2,
-                                    offset: '50px'
-                                });
-                            }
-                        }
-                    });
-                }, function(){
-                });
-            }else if (obj.event === 'yishou') {
-                layer.confirm('确认设置该商品为已售吗？', {
-                    btn: ['确定','算了'], //按钮
-                    title:"售出商品",
-                    offset:"50px"
-                }, function(){
-                    layer.closeAll();
-                    $.ajax({
-                        url: basePath+'/user/changecommstatus/'+data.commid+"/4",
+                        url: basePath+'/user/delete/'+data.commid,
                         data: "",
                         contentType: "application/json;charset=UTF-8", //发送数据的格式
                         type: "get",

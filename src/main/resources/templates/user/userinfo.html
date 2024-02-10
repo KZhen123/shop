@@ -24,17 +24,6 @@
 
                     <form class="layui-form">
                         <div class="layui-form-item">
-                            <label class="layui-form-label">我的角色</label>
-                            <div class="layui-input-inline">
-                                <select name="role" lay-verify="">
-                                    <option value="1" selected>网站用户</option>
-                                    <!--<option value="2" disabled>普通管理员</option>-->
-                                    <!--<option value="3" disabled>超级管理员</option>-->
-                                </select>
-                            </div>
-                            <div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
-                        </div>
-                        <div class="layui-form-item">
                             <label class="layui-form-label">用户名</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="username" lay-verify="required" lay-reqtext="用户名不能为空"
@@ -56,32 +45,6 @@
                             <div class="layui-input-inline">
                                 <input type="text" name="email" value="" lay-verify="email" autocomplete="off"
                                        placeholder="请输入邮箱" class="layui-input" th:value="${userInfo.email}">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">学校</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="school" lay-verify="school" autocomplete="off"
-                                       placeholder="请输入所在学校" class="layui-input" th:value="${userInfo.school}"
-                                       style="cursor:not-allowed;" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">院系</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="faculty" value="" lay-verify="faculty" autocomplete="off"
-                                       placeholder="请输入所在院系" class="layui-input" th:value="${userInfo.faculty}"
-                                       style="cursor:not-allowed;" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">入学时间</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="startime" class="layui-input"
-                                           placeholder="选择入学时间" th:value="${userInfo.startime}"
-                                           style="cursor:not-allowed;" readonly="readonly">
-                                </div>
                             </div>
                         </div>
                         <div class="layui-form-item">

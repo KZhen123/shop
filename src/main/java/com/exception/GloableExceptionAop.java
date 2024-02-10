@@ -5,11 +5,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @Author hlt
- * @Date 2019/11/27 14:49
- */
-
 @ControllerAdvice
 public class GloableExceptionAop {
     /**

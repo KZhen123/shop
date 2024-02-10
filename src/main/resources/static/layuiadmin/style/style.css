@@ -1,0 +1,90 @@
+        body {
+          background: url(../img/back.jpg) no-repeat;
+          background-size: 100% 100%;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+        }
+        .container {
+            height: 100%;
+        }
+        .login-wrapper {
+            background-color: #fff;
+            width: 358px;
+            height: 620px;
+            border-radius: 15px;
+            padding: 0 50px;
+            position: relative;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .header {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 80px;
+        }
+        .header2 {
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 100px;
+        }
+        .input-item {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 0;
+            line-height: 40px;
+            border-bottom: 1px solid rgb(128, 125, 125);
+            font-size: 15px;
+            outline: none;
+        }
+        .input-item:placeholder {
+            text-transform: uppercase;
+        }
+        .btn {
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            margin-top: 30px;
+            background-color: #B0E0E6;
+            border: none;
+        }
+        .msg {
+            text-align: center;
+            line-height: 88px;
+        }
+        .msg1 {
+            color:#DC143C;
+            margin-top:20px;
+            width: 100%;
+        }
+        .msg2 {
+            text-align: center;
+            line-height: 70px;
+        }
+        a {
+            text-decoration-line: none;
+            color: #abc1ee;
+        }
+        .itxt {
+            border: 0 none;
+            float: none;
+            font-family: "宋体";
+            font-size: 14px;
+            height: 13px;
+            line-height: 18px;
+            overflow: hidden;
+            padding: 10px 0 10px 10px;
+            width: 220px;
+            border: 1px #e3e3e3 solid;
+        }

@@ -8,14 +8,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author hlt
- * @since 2019-12-25
- */
 @AllArgsConstructor//全参构造
 @NoArgsConstructor//无参构造
 @Data
@@ -29,7 +21,7 @@ public class UserInfo implements Serializable {
      */
 	private String userid;
     /**
-     * 角色id 1普通用户 2管理员 3超级管理员
+     * 角色id 1普通用户 2管理员
      */
     private Integer roleid;
     /**
@@ -57,18 +49,6 @@ public class UserInfo implements Serializable {
      */
 	private String sex;
     /**
-     * 学校
-     */
-	private String school;
-    /**
-     * 院系
-     */
-	private String faculty;
-    /**
-     * 入学时间
-     */
-	private String startime;
-    /**
      * 1正常 0封号
      */
 	private Integer userstatus;
@@ -76,21 +56,4 @@ public class UserInfo implements Serializable {
      * 注册时间
      */
 	private Date createtime;
-    /**
-     * 验证码
-     */
-	private String vercode;
-    /**
-     * 在线状态
-     */
-    private String status;//在线状态 online：在线、hide：隐身
-
-    //补充的属性
-    private String id; //我的ID
-    private String sign; //我的签名
-    private String avatar;//我的头像
-    private String content;   //聊天内容
-    private String type; //消息类型
-    private String toid; //聊天窗口的选中的用户或者群组的id
-    private Date sendtime;  //消息发送时间
 }

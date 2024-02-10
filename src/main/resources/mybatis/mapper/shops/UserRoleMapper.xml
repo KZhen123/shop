@@ -4,7 +4,7 @@
 
     <!-- 插入角色 -->
     <insert id="InsertUserRole" parameterType="com.entity.UserRole">
-      insert into user_role (userid, roleid, identity) values (#{userid},#{roleid},#{identity})
+      insert into user_role (userid, roleid) values (#{userid},#{roleid})
     </insert>
 
     <!-- 查询角色id -->

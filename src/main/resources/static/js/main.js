@@ -276,76 +276,6 @@
         });
     }
 
-    function mapConfig() {
-        $.gmap3({
-            key: 'AIzaSyAx39JFH5nhxze1ZydH-Kl8xXM3OK4fvcg'
-        });
-        var map = $('#contact-map');
-        if (map.length > 0) {
-            map.gmap3({
-                address: map.data('address'),
-                zoom: map.data('zoom'),
-                scrollwheel: false,
-                mapTypeId: google.maps.MapTypeId.ROADMAP,
-                scrollwheel: false,
-                styles: [{
-                    "featureType": "administrative",
-                    "elementType": "all",
-                    "stylers": [{"visibility": "on"}, {"lightness": 33}]
-                }, {
-                    "featureType": "landscape",
-                    "elementType": "all",
-                    "stylers": [{"color": "#f2e5d4"}]
-                }, {
-                    "featureType": "poi.park",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#c5dac6"}]
-                }, {
-                    "featureType": "poi.park",
-                    "elementType": "labels",
-                    "stylers": [{"visibility": "on"}, {"lightness": 20}]
-                }, {
-                    "featureType": "road",
-                    "elementType": "all",
-                    "stylers": [{"lightness": 20}]
-                }, {
-                    "featureType": "road.highway",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#c5c6c6"}]
-                }, {
-                    "featureType": "road.arterial",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#e4d7c6"}]
-                }, {
-                    "featureType": "road.local",
-                    "elementType": "geometry",
-                    "stylers": [{"color": "#fbfaf7"}]
-                }, {
-                    "featureType": "water",
-                    "elementType": "all",
-                    "stylers": [{"visibility": "on"}, {"color": "#acbcc9"}]
-                }]
-            }).marker(function(map) {
-                return {
-                    position: map.getCenter(),
-                    icon: 'images/marker.png',
-                    animation: google.maps.Animation.BOUNCE
-                };
-            }).infowindow({
-                content: map.data('address')
-            }).then(function(infowindow) {
-                var map = this.get(0);
-                var marker = this.get(1);
-                marker.addListener('click', function() {
-                    infowindow.open(map, marker);
-                });
-            });
-        }
-        else {
-            console.log("Notice: Don't have map on this page!!!");
-        }
-    }
-
     function productVariantsAjax() {
         var selector = $('.ps-btn'),
             shoe = $('.ps-shoe');
@@ -677,7 +607,7 @@
         menuBtnToggle();
         subMenuToggle();
         owlCarousel($('.owl-slider'));
-        mapConfig();
+//        mapConfig();
         // setHeightProduct();
         navigateOwlCarousel();
         countDown();

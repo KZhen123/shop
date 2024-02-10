@@ -17,7 +17,7 @@
     </insert>
     <!-- 登录及判断用户是否存在 -->
     <select id="userLogin" parameterType="com.entity.Login" resultMap="shoplogin">
-        select * from login
+        select * from user_info
         <where>
             <if test="userid != null">and userid = #{userid}</if>
             <if test="username != null">and username = #{username}</if>
@@ -28,14 +28,10 @@
     </select>
     <!-- 修改登录信息 -->
     <update id="updateLogin" parameterType="com.entity.Login">
-        update login
+        update user_role
         <set>
             <if test="roleid != null">roleid = #{roleid},</if>
-            <if test="username != null">username = #{username},</if>
-            <if test="password != null">password = #{password},</if>
-            <if test="mobilephone != null">mobilephone = #{mobilephone},</if>
-            <if test="userstatus != null">userstatus = #{userstatus}</if>
         </set>
-        where id=#{id} or userid=#{userid}
+        where userid=#{userid}
     </update>
 </mapper>

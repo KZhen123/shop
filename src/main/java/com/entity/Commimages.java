@@ -8,14 +8,6 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author hlt
- * @since 2019-12-25
- */
 @AllArgsConstructor//全参构造
 @NoArgsConstructor//无参构造
 @Data

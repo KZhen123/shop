@@ -49,7 +49,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-8 col-sm-6 col-xs-12">
-                    <p>欢迎来到校园二手商城！</p>
+                    <p>欢迎来到校园商城！</p>
                 </div>
                 <div class="col-lg-6 col-md-4 col-sm-6 col-xs-12">
                     <div class="header__actions">
@@ -83,56 +83,14 @@
             </div>
         </div>
     </div>
-    <nav class="navigation">
-        <div class="container-fluid">
-            <div class="navigation__column center">
-                <ul class="main-menu menu">
-                    <li class="menu-item menu-item-has-children dropdown"><a th:href="@{/}">首页</a>
-<!--                    <li class="menu-item menu-item-has-children has-mega-menu"><a th:href="@{/product-listing}">商品清单</a>-->
-                </ul>
-            </div>
-        </div>
-    </nav>
 </header>
-<div class="header-services" th:fragment="myhdservices">
-    <div class="ps-services owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="7000" data-owl-gap="0"
-         data-owl-nav="true" data-owl-dots="false" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1"
-         data-owl-item-md="1" data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on">
-        <p class="ps-service"><i class="ps-icon-delivery"></i>你的需求就是我的需求，您的满意就是我的满意！</p>
-        <p class="ps-service"><i class="ps-icon-delivery"></i>小市场，大甩卖，让闲置物跳回家。</p>
-        <p class="ps-service"><i class="ps-icon-delivery"></i>环保公益两不误，与你相约在校园二手商城。</p>
-    </div>
-</div>
-<div class="layui-carousel" id="test10">
-    <div carousel-item="">
-        <div><img th:src="@{/static/images/slider/3.jpg}" style="width:100%;height: 100%;"></div>
-        <div><img th:src="@{/static/images/slider/2.jpg}" style="width:100%;height: 100%;"></div>
-    </div>
-</div>
+
 <main class="ps-main" id="indexssss">
     <div class="ps-products-wrap pt-80 pb-80" id="productlist">
         <div class="ps-products" data-mh="product-listing">
             <div class="ps-product-action">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
-                        <label class="layui-form-label" style="width: 120px;font-size:15px;color:#626262"><b>排序方式</b></label>
-                        <div class="layui-input-inline">
-                            <select name="sort" lay-filter="sort">
-                                <option th:title="0">默认</option>
-                                <option th:title="1">价格 (从低到高)</option>
-                                <option th:title="2">价格 (从高到低)</option>
-                                <option th:title="3">点击率 (从低到高)</option>
-                                <option th:title="4">点击率 (从高到低)</option>
-                            </select>
-                        </div>
-
-                        <label class="layui-form-label" style="width: 120px;font-size:15px;color:#626262"><b>类别</b></label>
-                        <div class="layui-input-inline">
-                            <select name="category" lay-filter="category">
-                                <option th:title="0">全部</option>
-                            </select>
-                        </div>
-
                         <label class="layui-form-label" style="width: 120px;font-size:15px;color:#626262"><b>商品名称</b></label>
                         <div class="layui-inline">
                             <input type="text" name="name" autocomplete="off" class="layui-input">
@@ -153,7 +111,7 @@
                             <div class="ps-shoes--carousel">
                                 <div class="ps-shoe">
                                     <div class="ps-shoe__thumbnail">
-                                        <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>
+<!--                                        <a class="ps-shoe__favorite" href="#"><i class="ps-icon-heart"></i></a>-->
                                         <img v-bind:src="commodity.image" alt="商品主图" style="height:400px">
                                         <a class="ps-shoe__overlay" :href="'/product-detail/'+commodity.commid"
                                            target="_blank"></a>
@@ -171,11 +129,8 @@
                                                     {{ commodity.commname }}
                                                 </a>
                                             </p>
-                                            <p class="ps-shoe__categories">
-                                                {{ commodity.school }}
-                                            </p>
                                             <span class="ps-shoe__price">
-                                            <del> ￥ {{ commodity.orimoney }}</del> ￥ {{ commodity.thinkmoney }}
+                                            ￥ {{ commodity.money }}
                                         </span>
                                         </div>
                                     </div>
@@ -191,17 +146,6 @@
                 </div>
             </div>
         </div>
-        <div class="ps-sidebar" data-mh="product-listing">
-            <aside class="ps-widget--sidebar ps-widget--filter">
-                <div class="ps-widget__header">
-                    <h3>价格</h3>
-                </div>
-                <div class="ps-widget__content">
-                    <div id="slideTest9" class="demo-slider"></div>
-                    <div id="test-slider-tips2" style="position:relative; left: 30px; margin-top: -10px;"></div>
-                </div>
-            </aside>
-        </div>
     </div>
 
 </main>
@@ -210,7 +154,6 @@
 <script type="text/javascript" th:src="@{/static/plugins/bootstrap/dist/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/jquery-bar-rating/dist/jquery.barrating.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/owl-carousel/owl.carousel.min.js}"></script>
-<!--<script type="text/javascript" th:src="@{/static/plugins/gmap3.min.js}"></script>-->
 <script type="text/javascript" th:src="@{/static/plugins/imagesloaded.pkgd.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/isotope.pkgd.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/bootstrap-select/dist/js/bootstrap-select.min.js}"></script>
@@ -219,31 +162,17 @@
 <script type="text/javascript" th:src="@{/static/plugins/elevatezoom/jquery.elevatezoom.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/Magnific-Popup/dist/jquery.magnific-popup.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/jquery-ui/jquery-ui.min.js}"></script>
-<!--<script type="text/javascript" th:src="@{/static/js/ditugoogle.js}"></script>-->
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.tools.min.js}"></script>
 <script type="text/javascript" th:src="@{/static/plugins/revolution/js/jquery.themepunch.revolution.min.js}"></script>
 <!-- Custom scripts-->
 <script type="text/javascript" th:src="@{/static/js/main.js}"></script>
 <script type="text/javascript" th:src="@{/static/layui/layui.js}"></script>
 <script type="text/javascript" th:src="@{/static/js/common/index.js}"></script>
-<!--<script type="text/javascript" th:src="@{/static/js/common/product-listing.js}"></script>-->
 <script>
-    layui.use(['form', 'layer','carousel'], function () {
-        var form = layui.form;
-        var $ = layui.jquery,
-            layer = layui.layer;
-        var carousel = layui.carousel;
-        carousel.render({
-            elem: '#test10'
-            , width: '100%'
-            , height: '815px'
-            ,interval: 5000
-        });
-    });
-
     function tologin() {
         location.href = basePath + "/login";
     }
 </script>
+
 </body>
 </html>

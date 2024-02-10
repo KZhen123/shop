@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.entity.Order">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="buyerId" property="buyerId" jdbcType="VARCHAR" />
+        <result column="sellerId" property="sellerId" jdbcType="VARCHAR" />
+        <result column="commodityId" property="commodityId" jdbcType="VARCHAR" />
+        <result column="commodityName" property="commodityName" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="receiveName" property="receiveName" jdbcType="VARCHAR" />
+        <result column="receivePhone" property="receivePhone" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="orderId" property="orderId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+        buyerId,
+        sellerId,
+        commodityId,
+        commodityName,
+        price,
+        time,
+        receiveName,
+        receivePhone,
+        address,
+        orderId
+    </sql>
+    <insert id="insert" parameterType="com.entity.Order">
+        insert into `order` (id, buyerId, sellerId, commodityId, commodityName, price, receiveName, receivePhone, address, orderId)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{buyerId,jdbcType=VARCHAR},
+        #{sellerId,jdbcType=VARCHAR},
+        #{commodityId,jdbcType=VARCHAR},
+        #{commodityName,jdbcType=VARCHAR},
+        #{price,jdbcType=DECIMAL},
+        #{receiveName,jdbcType=VARCHAR},
+        #{receivePhone,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR},
+        #{orderId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from order
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order
+    </select>
+    <select id="queryPageList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from `order`
+        where 1=1
+        <if test="buyerId != null">
+            and buyerId = #{buyerId}
+        </if>
+        <if test="sellerId != null">
+            and sellerId = #{sellerId}
+        </if>
+        limit #{begin}, #{size}
+    </select>
+
+    <select id="getCount" resultType="java.lang.Long">
+        select
+        count(1)
+        from `order`
+        where 1=1
+        <if test="buyerId != null">
+            and buyerId = #{buyerId}
+        </if>
+        <if test="sellerId != null">
+            and sellerId = #{sellerId}
+        </if>
+    </select>
+
+</mapper>

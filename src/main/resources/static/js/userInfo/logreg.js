@@ -2,11 +2,6 @@
 document.querySelector('.img__btn').addEventListener('click', function() {
     document.querySelector('.dowebok').classList.toggle('s--signup')
 });
-//获取验证码js
-function getcode() {
-    var b = Math.random();
-    document.getElementById("image1").src = basePath+"/images?d\x3d" + b
-};
 layui.use(['form','layer'], function () {
     var form=layui.form;
     var $ = layui.jquery,
@@ -129,7 +124,6 @@ var app = new Vue({
         }
     },
     mounted: function () {
-        //将vue中的函数设置成全局的
         window.jiantingphone = this.jiantingphone;
         window.jiantingemail = this.jiantingemail;
     },
@@ -182,7 +176,6 @@ function submitregister() {
     var phone=$("#userphone").val();
     var nickname=$("#nickname").val();
     var password2=$("#password2").val();
-    var phonevercode=$("#phonevercode").val();
     var useremail=$("#useremail").val();
     var t=jiantingphone();
     if(t==0){
@@ -219,30 +212,12 @@ function submitregister() {
         $("#password2").focus();
         return;
     }
-    if (phonevercode.length === 0) {
-        layer.tips("请输入验证码", '#phonevercode', {
-            tips: [1, "#0FA6D8"],
-            tipsMore: !1,
-            time: 1300
-        });
-        $("#phonevercode").focus();
-        return;
-    } else if (phonevercode.length != 6) {
-        layer.tips("请输入正确验证码", '#phonevercode', {
-            tips: [1, "#FF5722"],
-            tipsMore: !1,
-            time: 1300
-        });
-        $("#phonevercode").focus();
-        return;
-    }
     $("#submitrg").addClass("layui-btn-disabled");
     $("#submitrg").attr("disabled", true);
     var object = new Object(); //创建一个存放数据的对象
     object["username"] = nickname;
     object["mobilephone"] = phone;
     object["password"] = password2;
-    object["vercode"] = phonevercode;
     object["email"] = useremail;
     var jsonData = JSON.stringify(object); //根据数据生成json数据
     $.ajax({
@@ -278,18 +253,7 @@ function submitregister() {
                     icon: 1,
                     offset: '100px'
                 }, function () {
-                    layer.open({
-                        type: 2,
-                        title: '完善信息',
-                        shadeClose: true,
-                        shade: 0.8,
-                        maxmin: true,
-                        area: ['60%', '70%'],
-                        content: basePath+'/user/perfectinfo',
-                        end: function () {
-                            location.href=basePath+"/";
-                        }
-                    });
+                    location.href=basePath+"/";
                 });
             }
             $("#submitrg").removeClass("layui-btn-disabled");
@@ -302,98 +266,4 @@ function submitregister() {
             });
         }
     });
-}
-
-
-var logregurl =  window.location.href;
-var time=60;
-var p_timer = null;
-if(Cookies.get('times') != undefined){
-    time=Cookies.get('times');
-    p_timer = window.setInterval('timers()', 1000);
-}else{
-    time=60;
-    $("#LAY-user-getsmscode").removeClass("layui-btn-disabled");
-    $("#LAY-user-getsmscode").attr("disabled", false);
-}
-//获取短信验证码
-function getphonecode() {
-    //判断手机号是否合法
-    var t=jiantingphone();
-    if(t==0){
-        return;
-    }
-    //ajax到后台
-    var phone=$("#userphone").val();
-    var object = new Object(); //创建一个存放数据的对象
-    object["mobilephone"] = phone;
-    object["type"] = 0;
-    var jsonData = JSON.stringify(object); //根据数据生成json数据
-    $.ajax({
-        url: basePath + "/user/sendregcode",
-        data: jsonData,
-        contentType: "application/json;charset=UTF-8", //发送数据的格式
-        type: "post",
-        dataType: "json", //回调
-        beforeSend: function () {
-            layer.load(1, { //icon支持传入0-2
-                content: '发送中...',
-                success: function (layero) {
-                    layero.find('.layui-layer-content').css({
-                        'padding-top': '39px',
-                        'width': '60px'
-                    });
-                }
-            });
-        },
-        complete: function () {
-            layer.closeAll('loading');
-        },
-        success: function (data) {
-            if (data.status == 200) {
-                layer.msg(data.message, {
-                    time: 1000,
-                    icon: 1,
-                    offset: '100px'
-                });
-                p_timer = window.setInterval('timers()', 1000);
-            } else if (data.status == 201) {
-                layer.msg(data.message, {
-                    time: 1000,
-                    icon: 2,
-                    offset: '100px'
-                });
-            }else if (data.status == 203){
-                layer.msg(data.message, {
-                    time: 1000,
-                    icon: 2,
-                    offset: '100px'
-                });
-            }
-        },error:function () {
-            layer.msg("系统错误", {
-                time: 1000,
-                icon: 2,
-                offset: '100px'
-            });
-        }
-    });
-}
-//倒计时
-function timers() {
-    if (time == 0) {
-        window.clearInterval(p_timer);
-        $("#LAY-user-getsmscode").html("获取验证码");
-        $("#LAY-user-getsmscode").removeClass("layui-btn-disabled");
-        $("#LAY-user-getsmscode").attr("disabled", false);
-        Cookies.remove('times', {path: logregurl});
-        time=60;
-    } else {
-        time = time - 1;
-        $("#LAY-user-getsmscode").addClass("layui-btn-disabled");
-        $("#LAY-user-getsmscode").attr("disabled", true);
-        $("#LAY-user-getsmscode").html(time+"s后可重新发送");
-        Cookies.remove('times', {path: logregurl});
-        Cookies.set('times', time, {path: logregurl});
-    }
 }

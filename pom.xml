@@ -8,8 +8,8 @@
         <version>1.5.10.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>Campus-shops</groupId>
-    <artifactId>shops</artifactId>
+    <groupId>second_shop</groupId>
+    <artifactId>shop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>shops</name>
     <description>Demo project for Spring Boot</description>
@@ -24,14 +24,6 @@
     </properties>
 
     <dependencies>
-        <!--支付宝支付-->
-        <!-- https://mvnrepository.com/artifact/com.alipay.sdk/alipay-sdk-java -->
-        <dependency>
-            <groupId>com.alipay.sdk</groupId>
-            <artifactId>alipay-sdk-java</artifactId>
-            <version>4.8.10.ALL</version>
-        </dependency>
-        <!--支付宝支付-->
         <!--thymeleaf和shiro标签整合使用
             thymeleaf 对shiro扩展坐标 -->
         <dependency>
@@ -48,12 +40,6 @@
             <version>1.4.0</version>
         </dependency>
         <!--shiro结束-->
-        <!--阿里云短信-->
-        <dependency>
-            <groupId>com.aliyun</groupId>
-            <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>4.0.3</version>
-        </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -125,11 +111,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
         <!--热部署  每次修改代码springboot自动重启服务-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -169,12 +150,7 @@
             <artifactId>joda-time</artifactId>
             <version>2.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
